@@ -1,3 +1,15 @@
 # Ceph Watch
 
 Ceph Watch is daemon capable of watching state of Ceph cluster and exporting metrics for link:https://github.com/prometheus/node_exporter[Prometheus node_exporter]
+
+
+## Metrics
+
+ceph_timestamp - timestamp of last export
+ceph_pgs - number of pgs
+ceph_pgmap - pgmap id
+ceph_pg_state{state="$STATE"}  - number of pgs in state $STATE
+ceph_data - amount of data saved [bytes]
+ceph_used - amount of used space [bytes]
+ceph_avail - available space [bytes]
+ceph_max_avail - space available [bytes]
