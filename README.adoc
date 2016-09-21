@@ -1,0 +1,3 @@
+# Ceph Watch
+
+Ceph Watch is daemon capable of watching state of Ceph cluster and exporting metrics for link:https://github.com/prometheus/node_exporter[Prometheus node_exporter]
