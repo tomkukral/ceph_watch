@@ -85,5 +85,5 @@ class CephReader():
         rename(self.outfile + '.new', self.outfile)
 
 if __name__ == '__main__':
-     a = CephReader()
+    a = CephReader()
     a.read()
