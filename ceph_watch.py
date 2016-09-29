@@ -8,7 +8,7 @@ import time
 class CephReader():
     """Reads ceph -w output and parse it"""
 
-    def __init__(self, cmd='ceph -w', outfile='/tmp/ceph.prom'):
+    def __init__(self, cmd='ceph -w', outfile='/var/lib/node_exporter/ceph.prom'):
         self.cmd = cmd
         self.outfile = outfile
 
@@ -85,6 +85,5 @@ class CephReader():
         rename(self.outfile + '.new', self.outfile)
 
 if __name__ == '__main__':
-    # a = CephReader()
-    a = CephReader(cmd='./ceph.sh', outfile='/tmp/ceph.prom')
+     a = CephReader()
     a.read()
