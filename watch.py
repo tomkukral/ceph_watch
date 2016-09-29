@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 from os import rename
-
-import subprocess
 import re
+import subprocess
+import time
 
 
 class CephReader():
@@ -21,7 +21,7 @@ class CephReader():
     def parse(self):
         # pgmap v28143095: 320 pgs: 320 active+clean; 289 GB data, 875 GB used, 2722 GB / 3597 GB avail; 34637 B/s wr, 5 op/s\n
 
-        regexp = (r'.*pgmap v(?P<pgmap>[\d]*): (?P<pgs>[\d]*) pgs: (?P<tmp_pg_states>.*?);'
+        regexp = (r'.*pgmap v(?P<pgmap>[\d]*): (?P<pgs>[\d]*) pgs: (?P<tmp_pg_states>.*?); '
                   '(?P<tmp_capa_data>[\d]* [MGT]B) data, (?P<tmp_capa_used>[\d]* [MGT]B) '
                   'used, (?P<tmp_capa_avail>[\d]* [MGT]B) / (?P<tmp_capa_max_avail>[\d]* [MGT]B) avail')
         regexp_pg_state = r'(?P<count>[\d]*) (?P<state>.*)'
@@ -45,7 +45,7 @@ class CephReader():
     def export(self):
         """Export metrics to file"""
 
-        metrics = []
+        metrics = ['ceph_timestamp {}'.format(int(time.time()))]
 
         for k, v in self.parsed.items():
             if not k.startswith('tmp_'):
