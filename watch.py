@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-
-from time import sleep
 from os import rename
 
 import subprocess
@@ -10,7 +8,7 @@ import re
 class CephReader():
     """Reads ceph -w output and parse it"""
 
-    def __init__(self, cmd='./ceph.sh', outfile='/var/lib/node_exporter/ceph.prom'):
+    def __init__(self, cmd='ceph -w', outfile='/tmp/ceph.prom'):
         self.cmd = cmd
         self.outfile = outfile
 
@@ -53,7 +51,6 @@ class CephReader():
                 if type(v) == str:
                     if v.isdigit():
                         metrics.append('ceph_{} {}'.format(k, v))
-                                        # pg states
                 if k == 'pg':
                     for state, count in v.items():
                         metrics.append('ceph_pg_state{{state="{}"}} {}'.format(state, count))
@@ -77,7 +74,6 @@ class CephReader():
                                 int(size_match.group('size'))*ratio)
                         )
 
-
         # write to file
         fo = open(self.outfile + '.new', 'w')
         fo.write('\n'.join(metrics) + '\n')
@@ -87,5 +83,6 @@ class CephReader():
         rename(self.outfile + '.new', self.outfile)
 
 if __name__ == '__main__':
-    a = CephReader(outfile='/tmp/ceph.prom')
+    #a = CephReader()
+    a = CephReader(cmd='./ceph.sh', outfile='/tmp/ceph.prom')
     a.read()
